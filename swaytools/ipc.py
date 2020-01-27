@@ -3,8 +3,11 @@ import json
 import socket
 import struct
 
+from .tree import Node
+
 RUN_COMMAND = 0
 GET_TREE = 4
+
 
 class I3Ipc:
     _MAGIC = b'i3-ipc'
@@ -56,14 +59,11 @@ class I3Ipc:
         self._send(msg_type, payload)
         return self._recv()
 
-    def get_tree(self):
+    def get_raw_tree(self):
         return self.msg(GET_TREE)
+
+    def get_tree(self):
+        return Node(self.get_raw_tree())
 
     def command(self, cmd):
         return self.msg(RUN_COMMAND, cmd.encode('utf-8'))
-
-
-
-
-
-

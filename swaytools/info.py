@@ -6,7 +6,7 @@ class WindowInfo:
         self.x = x
         self.y = y
         with I3Ipc() as i3:
-            self.tree = i3.get_tree()
+            self.tree = i3.get_raw_tree()
 
     def _contains_point(self, node):
         rect = node['rect']
@@ -23,7 +23,6 @@ class WindowInfo:
                     return True
 
     def _process_workspace(self, workspace):
-        # FIXME: figure out which floating node is on top
         for n in reversed(workspace['floating_nodes']):
             if self._contains_point(n):
                 self._print_node(n)
