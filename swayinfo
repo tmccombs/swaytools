@@ -1,8 +1,0 @@
-#!/usr/bin/env python
-# pylint: disable=C0103,C0114
-
-from swaytools.info import main
-
-main()
-
-# vim: sw=4 ts=5 et
