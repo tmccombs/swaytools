@@ -1,6 +1,20 @@
 # swaytools
 Collection of simple tools for sway (and i3)
 
+## Installation
+
+### Archlinux
+
+swaytools is availabe in the [AUR](https://aur.archlinux.org/packages/swaytools/)
+
+### Pip
+
+swaytools is available from [PyPI](https://pypi.org/project/swaytools/):
+
+```
+$ pip install --user swaytools
+```
+
 ## Available tools
 
 *swayinfo*: Tool similar to xprop that lets you click on a window, and prints info on that window (retrieved from sway's tree).
