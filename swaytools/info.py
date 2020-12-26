@@ -51,7 +51,8 @@ class WindowInfo:
         if win_props:
             print(f"class={win_props['class']}")
             print(f"instance={win_props['instance']}")
-            print(f"window_role={win_props['window_role']}")
+            if 'window_role' in win_props:
+                print(f"window_role={win_props['window_role']}")
         if node.get("urgent"):
             print("urgent")
         if node.get("focused"):
