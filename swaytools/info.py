@@ -9,12 +9,13 @@ class WindowInfo:
             self.tree = i3.get_raw_tree()
 
     def _contains_point(self, node):
-        rect = node['rect']
-        return ((rect['x'] < self.x < rect['x'] + rect['width'])
-                and (rect['y'] < self.y < rect['y'] + rect['height']))
+        rect = node["rect"]
+        return (rect["x"] < self.x < rect["x"] + rect["width"]) and (
+            rect["y"] < self.y < rect["y"] + rect["height"]
+        )
 
     def _process_node(self, node):
-        for n in node['nodes']:
+        for n in node["nodes"]:
             if self._contains_point(n):
                 if n.get("visible", False):
                     self._print_node(n)
@@ -23,16 +24,16 @@ class WindowInfo:
                     return True
 
     def _process_workspace(self, workspace):
-        for n in reversed(workspace['floating_nodes']):
+        for n in reversed(workspace["floating_nodes"]):
             if self._contains_point(n):
                 self._print_node(n)
                 return
         self._process_node(workspace)
 
     def _process_output(self, out):
-        active_ws = out['current_workspace']
-        for ws in out['nodes']:
-            if ws['name'] == active_ws:
+        active_ws = out["current_workspace"]
+        for ws in out["nodes"]:
+            if ws["name"] == active_ws:
                 self._process_workspace(ws)
                 break
 
@@ -51,7 +52,7 @@ class WindowInfo:
         if win_props:
             print(f"class={win_props['class']}")
             print(f"instance={win_props['instance']}")
-            if 'window_role' in win_props:
+            if "window_role" in win_props:
                 print(f"window_role={win_props['window_role']}")
         if node.get("urgent"):
             print("urgent")
@@ -60,10 +61,10 @@ class WindowInfo:
         print()
 
     def print_info(self):
-        'Print info for all nodes that contain the point'
-        for output in self.tree['nodes']:
-            if output.get('active') and self._contains_point(output):
-                assert output['type'] == 'output', 'Unexpected child of root'
+        "Print info for all nodes that contain the point"
+        for output in self.tree["nodes"]:
+            if output.get("active") and self._contains_point(output):
+                assert output["type"] == "output", "Unexpected child of root"
                 self._process_output(output)
                 break
 
@@ -71,8 +72,9 @@ class WindowInfo:
 def main():
     import subprocess
 
-    point = subprocess.run(['slurp', '-f', '%x,%y', '-p'], check=True, text=True, capture_output=True).stdout
-    (x, y) = map(int, point.split(','))
+    point = subprocess.run(
+        ["slurp", "-f", "%x,%y", "-p"], check=True, text=True, capture_output=True
+    ).stdout
+    (x, y) = map(int, point.split(","))
     info = WindowInfo(x, y)
     info.print_info()
-
