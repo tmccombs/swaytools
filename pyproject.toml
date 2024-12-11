@@ -31,5 +31,8 @@ name = "Thayne McCombs"
 swayinfo = "swaytools.info:main"
 winfocus = "swaytools.winfocus:main"
 
+[tool.hatch.version]
+path = "swaytools/__init__.py"
+
 [tool.setuptools.dynamic]
 version = {attr = "swaytools.__version__"}
